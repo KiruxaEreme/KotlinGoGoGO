@@ -38,3 +38,183 @@ fun min (s:Int) : Int
     }
     return m
 }
+fun proizv (s : Int):Int
+{
+    var p : Int = 1
+    var s1 : Int = s
+    while (s1 > 0)
+    {
+        p*= s1 % 10
+        s1 /= 10
+    }
+    return p
+}
+//8
+fun prost(s:Int):Int {
+    var a = 2
+    var k = 0
+    while (a < s) {
+        var del = 2
+        var flag: Boolean = false
+        while (del <= a) {
+
+            if (a % del == 0 && s % del == 0) {
+                flag = true
+                break
+            }
+            del++
+        }
+        if (flag && a % 2 == 0) {
+            k++
+            println("число: $a")
+        }
+        a++
+
+    }
+    return k
+}
+fun sum3 (s:Int):Int {
+    var num = s
+    var max: Int = 0
+    while (num > 0) {
+        if ((num % 10) % 3 != 0 && (num % 10) > max) max = num % 10
+        num /= 10
+    }
+    if (max % 3 == 0)
+        return (-1)
+    else
+        return(max)
+}
+fun maxNotVzPr(s:Int):Int {
+    var a = 2
+    var maxNotVzPr = 0
+    var min = minDel(s)
+    while (a < s) {
+        var del = 2
+        var flag: Boolean = false
+        while (del <= a) {
+
+            if (a % del == 0 && s % del == 0) {
+                flag = true
+                break
+            }
+            del++
+        }
+        if (flag && a % min != 0){
+            maxNotVzPr = a
+            println("число: $a")
+        }
+        a++
+    }
+    return maxNotVzPr
+}
+
+fun minDel(s:Int):Int {
+    var d = 2
+    while (d <= s) {
+        if (s % d == 0) {
+            return d
+        }
+        d++
+    }
+    return 0
+}
+
+fun sumBelow5(s:Int):Int{
+    var sum = 0
+    var num = s
+    while (num > 0){
+        if ((num % 10) < 5){
+            sum += (num % 10)
+        }
+        num /= 10
+    }
+    return sum
+}
+
+fun task8_3 (s:Int):Int{
+    var max = maxNotVzPr(s)
+    var sum = sumBelow5(s)
+    println("max = $max; sum = $sum")
+    return max * sum
+}
+
+
+
+
+fun main(args: Array<String>)
+{
+    val scanner = Scanner(`in`)
+    println("Hello world")
+//3
+    println("Введите имя:")
+    var userName : String = scanner.nextLine()
+    println("Здравствуй, $userName!")
+
+//5
+    println("Какой язык твой любимый?")
+    var lang : String = scanner.nextLine()
+    when (lang)
+    {
+        "Kotlin","Prolog"->println("$userName, ты подлиза!")
+        else -> println("Шикарный выбор!")
+    }
+
+//6
+
+    var num : Int = scanner.nextInt()
+    var num1=num
+    var sum:Int=0
+    while(num1>0)
+    {
+        sum+=num1%10
+        num1/=10
+    }
+        //println(sum)
+
+//7
+    /*println(summ(num))
+    println(max(num))
+    println(min(num))
+    println(proizv(num))
+
+//8
+    println(prost(num))
+    println(sum3(num))
+    println(task8_3(num))*/
+
+//9
+
+    println("Введите число:")
+    print("-> ")
+    var n: Int = scanner.nextInt()
+    println("Найти:")
+    println("1. Сумму цифр числа")
+    println("2. Максимальную цифру числа")
+    println("3. Минимальную цифру числа")
+    println("4. Произведение цифр числа")
+    println("5. Kоличество четных чисел, не взаимно простых с данным")
+    println("6. Максимальная цифры числа, не делящуюся на 3")
+    println("7. произведение максимального числа, не взаимно простого\n" +
+            "с данным, не делящегося на наименьший делитель исходно числа, и\n" +
+            "суммы цифр числа, меньших 5")
+    println("8. Выход")
+    print("-> ")
+    var metod: Int = scanner.nextInt()
+    while (metod>0 && metod<8) {
+        when (metod) {
+            1 -> println(summ(n))
+            2 -> println(max(n))
+            3 -> println(min(n))
+            4 -> println(proizv(n))
+            5 -> println(prost(n))
+            6 -> println(sum3(n))
+            7 -> println(task8_3(n))
+        }
+        print("-> ")
+        metod = scanner.nextInt()
+    }
+
+
+
+}
