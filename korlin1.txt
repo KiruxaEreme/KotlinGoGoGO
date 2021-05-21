@@ -1,0 +1,40 @@
+import java.lang.Math.sqrt
+import java.lang.System.`in`
+import java.util.*
+
+//7
+fun summ (num:Int):Int
+{
+    var num1=num
+    var sum:Int=0
+    while(num1>0)
+    {
+        sum+=num1%10
+        num1/=10
+    }
+    return(sum)
+}
+fun max (s:Int) : Int
+{
+    var m =0
+    var s1 : Int = s
+    while (s1 > 0)
+    {
+        if (m<s1%10)
+            m = s1%10
+        s1 /=10
+    }
+    return m
+}
+fun min (s:Int) : Int
+{
+    var m = 9
+    var s1 : Int = s
+    while (s1 > 0)
+    {
+        if (m>s1%10)
+            m = s1%10
+        s1 /=10
+    }
+    return m
+}
