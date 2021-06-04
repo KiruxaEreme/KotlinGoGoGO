@@ -1,0 +1,104 @@
+import java.lang.System.`in`
+import java.util.*
+import kotlin.math.pow
+import kotlin.math.sqrt
+
+//1
+fun summUp (num:Int):Int = if (num==0) 0 else summUp(num/10)+(num%10)
+//2
+tailrec fun summD (num:Int,sum:Int) : Int = if (num == 0) sum else {
+    summD(num/10, sum+(num%10))
+}
+fun summDown(num:Int):Int = summD(num,0)
+//3
+fun maxUp (num:Int) : Int = if (num<10) num else {
+    if (num%10>maxUp(num/10)) num%10
+    else maxUp(num/10)
+}
+tailrec fun maxD (num: Int,max:Int):Int = if (num==0) max else {
+    if (max<num%10) maxD(num/10,num%10)
+    else
+        maxD(num/10,max)
+}
+fun maxDown (num:Int) = maxD(num/10,num%10)
+fun minUp (num:Int):Int=if (num<10) num else {
+    if (num%10<minUp(num/10)) num%10
+    else minUp(num/10)
+}
+tailrec fun minD (num:Int,min:Int):Int = if (num == 0) min else {
+    if (min > num%10) minD(num/10,num%10)
+    else minD(num/10,min)
+}
+fun minDown (num:Int) = minD(num/10,num%10)
+fun proizvUp (num:Int):Int = if (num==0) 1 else proizvUp(num/10)*(num%10)
+tailrec fun proizvD(num:Int, pr:Int):Int = if (num==0) pr else proizvD(num/10,pr*(num%10))
+fun proizvDown (num:Int) = proizvD(num,1)
+//4
+tailrec fun obhod(n : Int, accum : Int, f : (Int, Int) -> Int):Int = if (n==0) accum
+else obhod(n/10,f(accum,n%10),f)
+
+fun sum(n:Int):Int=obhod(n,0) { a, b -> a + b }
+fun proizv(n:Int):Int=obhod(n,1) { a, b -> a * b }
+fun min(n:Int):Int=obhod(n/10,n%10){a,b->if (a>b) b else a}
+fun max(n:Int):Int=obhod(n/10,n%10){a,b->if (a<b) b else a}
+//5
+tailrec fun obhod2(n : Int, accum : Int, f1 : (Int, Int) -> Int,f2:(Int)->Boolean):Int = if (n==0) accum
+else if (f2(n%10)) obhod2(n/10,f1(accum,n%10),f1,f2)
+else obhod2(n/10,accum,f1, f2)
+//6
+//Сумма цифр, которые меньше 5
+fun sumLess5(num:Int):Int=obhod2(num,0,{a,b->a+b},{a-> a<5 })
+//Произведение всех цифр, кроме 0
+fun proizvNot0(num:Int):Int=obhod2(num,1,{a,b->a*b},{a->a!=0})
+//Произведение четных чисел
+fun proizvChet(num:Int):Int=obhod2(num,1,{a,b->a*b},{a->a%2==0})
+//7.1
+tailrec fun checkDel(num:Int,n:Int,del:Int):Boolean=
+    if (num>=n && del>n || num<n && del>num) true else {
+    if (n % del == 0 && num % del == 0   ) false
+    else checkDel(num, n, del + 1)
+}
+tailrec fun prost(num:Int,count:Int,n:Int):Int = if (n==num) count else {
+    if (checkDel(num, n, 2)) prost(num, count + 1, n + 1)
+    else prost(num, count, n + 1)
+}
+fun countProst(num:Int):Int=prost(num,0,2)
+//7.2
+
+
+tailrec fun maxim(num:Int,accum:Int) : Int = if (num<=0) accum else {
+    if (num % 10 > accum && num%3 !=0) maxim(num/10,num%10)
+    else maxim(num/10,accum)
+}
+fun sumDel3(num:Int)=maxim(num/10,num%10)
+//7.3
+
+fun main (){
+    val scanner = Scanner(`in`)
+    val num:Int = scanner.nextInt()
+//1
+    println(summUp(num))
+//2
+    println(summDown(num))
+//3
+    println(maxUp(num))
+    println(maxDown(num))
+    println(minUp(num))
+    println(minDown(num))
+    println(proizvUp(num))
+    println(proizvDown(num))
+//4
+    println(sum(num))
+    println(proizv(num))
+    println(min(num))
+    println(max(num))
+//6
+    println(sumLess5(num))
+    println(proizvNot0(num))
+    println(proizvChet(num))
+//7
+    println(countProst(num))
+    println(sumDel3(num))
+   // println(vzprostDel(num))
+
+}
